@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.809.0.min.js"></script>
+
+    <script> 
+
+    var gcnt=0;
+    function changeImage_pre(newImage)
+    {
+        console.log('changeImage!')
+        console.log(newImage)
+        if (gcnt<=0){
+            gcnt=0
+            alert('First image!');        
+        }
+        else{
+            gcnt-=1;
+        }
+        console.log(gcnt)
+        var img = document.getElementById("img_el");
+        img.src = newImage[gcnt];
+        console.log(img.src)
+
+    }
+    function changeImage_next(newImage)
+    {
+        console.log('changeImage!')
+        console.log(newImage)
+        if (gcnt>= newImage.length-1){
+            gcnt=newImage.length-1
+            alert('Last image!');        }
+        else{
+            gcnt+=1;
+        }
+        console.log(gcnt)
+        var img = document.getElementById("img_el");
+        img.src = newImage[gcnt];
+        console.log(img.src)
+    }
+    function save(cls_name){
+        //TODO
+    }
+    function getCheckboxValue()  {
+        const query = 'input[name="cls"]:checked';
+        const selectedEls = 
+            document.querySelectorAll(query);    
+        let result = '';
+        selectedEls.forEach((el) => {
+            result += el.value + ' ';
+        });  
+        console.log(result)
+        save(result)
+        }
+
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('cls')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+    </script>
+
+
+</head>
+<body>
+
+{% set count = 0 %}
+
+ <table border="">
+     <tr>
+         <td width="500" height="600">
+             <center>
+                 <h4>Unlabeled Image</h4>
+                 <img id='img_el' src="{{unlabeled_image[0]}}" alt="Unlabeled Image" width="400" height="300" >
+                 <br></br>
+                 <button onclick="changeImage_pre({{unlabeled_image}});">Pre</button>
+                 <button onclick="changeImage_next({{unlabeled_image}});">Next</button>
+
+             </center>
+
+         </td>
+         <td width="500" height="600">
+             <center>
+                 <p><label><input type="checkbox" name="cls" value="cls01" onclick='onlyOne(this)'> class1</label></p>
+                 <p><label><input type="checkbox" name="cls" value="cls02" onclick='onlyOne(this)'> class2</label></p>
+                 <p><label><input type="checkbox" name="cls" value="cls03" onclick='onlyOne(this)'> class3</label></p>
+                 <p><label><input type="checkbox" name="cls" value="cls04" onclick='onlyOne(this)'> class4</label></p>
+                 <p><label><input type="checkbox" name="cls" value="cls05" onclick='onlyOne(this)'> class5</label></p>
+                 <br></br>
+                <button onclick='getCheckboxValue()'>submit</button>
+
+             </center>
+         </td>
+     </tr>
+ </table> 
+
+</body>
+</html>
